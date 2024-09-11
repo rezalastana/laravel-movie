@@ -12,18 +12,24 @@ use Inertia\Inertia;
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+    | contains the "web" middleware group. Now create something great!
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+// redirect login from /
+Route::redirect('/', '/prototype/login');
+
+// protory slicing /login
+Route::prefix('prototype')->name('prototype.')->group(function () {
+    Route::get('/login', function () {
+        // menuju file pada Folder resources/js/Pages/Prototype/Login.jsx
+        return Inertia::render('Prototype/Login');
+    })->name('login');
+    Route::get('/register', function () {
+        return Inertia::render('Prototype/Register');
+    })->name('register');
 });
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -35,4 +41,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
