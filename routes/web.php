@@ -16,6 +16,15 @@ use Inertia\Inertia;
 |
 */
 
+// test middleware spatie for role admin and user
+Route::get('/admin', function () {
+    return 'Hi admin';
+})->middleware('role:admin');
+
+Route::get('/user', function () {
+    return 'Hi user';
+})->middleware('role:user');
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -35,4 +44,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
