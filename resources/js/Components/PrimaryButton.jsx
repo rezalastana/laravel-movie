@@ -18,8 +18,10 @@ export default function PrimaryButton({
     className = "",
     disabled,
     children,
+    // default value variant is primary
     variant = "primary",
     processing,
+    //Properti lain yang tidak disebutkan secara eksplisit (seperti onClick, type, dll.) akan disimpan dalam objek props karena penggunaan {...props}.
     ...props
 }) {
     return (
