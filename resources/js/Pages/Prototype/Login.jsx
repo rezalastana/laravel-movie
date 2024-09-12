@@ -59,14 +59,16 @@ export default function Login() {
                             </div>
                             <div className="grid space-y-[14px] mt-[30px]">
                                 {/* use Primarybutton */}
-                                <PrimaryButton
-                                    // type ,text, onClick dimasukkan dalam ...props karena tidak disebutkan secara eksplisit
-                                    type="button"
-                                    text="hello,"
-                                    onClick={() => alert("Button Clicked!")}
-                                >
-                                    Start Watching
-                                </PrimaryButton>
+                                <Link href={route("prototype.dashboard")}>
+                                    <PrimaryButton
+                                        // type ,text, onClick dimasukkan dalam ...props karena tidak disebutkan secara eksplisit
+                                        type="button"
+                                        text="hello,"
+                                        onClick={() => alert("Button Clicked!")}
+                                    >
+                                        Start Watching
+                                    </PrimaryButton>
+                                </Link>
                                 {/* use Link to register */}
                                 <Link href={route("prototype.register")}>
                                     <PrimaryButton
