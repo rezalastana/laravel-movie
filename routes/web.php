@@ -31,13 +31,17 @@ Route::prefix('prototype')->name('prototype.')->group(function () {
         return Inertia::render('Prototype/Register');
     })->name('register');
     // dashboard
-    Route::get('dashboard', function () {
+    Route::get('/dashboard', function () {
         return Inertia::render('Prototype/Dashboard');
     })->name('dashboard');
     // subscription
-    Route::get('subscriptionPlan', function () {
+    Route::get('/subscriptionPlan', function () {
         return Inertia::render('Prototype/SubscriptionPlan');
     })->name('subscriptionPlan');
+    // show details movie
+    Route::get('/movie/{slug}', function () {
+        return Inertia::render('Prototype/Movie/Show');
+    })->name('movie.show');
 });
 
 
