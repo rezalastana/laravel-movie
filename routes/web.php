@@ -42,7 +42,6 @@ Route::prefix('prototype')->name('prototype.')->group(function () {
     Route::get('/movie/{slug}', function () {
         return Inertia::render('Prototype/Movie/Show');
     })->name('movie.show');
->>>>>>> feature/slicing
 });
 
 
