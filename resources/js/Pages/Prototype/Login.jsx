@@ -64,7 +64,7 @@ export default function Login() {
                                         // type ,text, onClick dimasukkan dalam ...props karena tidak disebutkan secara eksplisit
                                         type="button"
                                         text="hello,"
-                                        onClick={() => alert("Button Clicked!")}
+                                        // onClick={() => alert("Button Clicked!")}
                                     >
                                         Start Watching
                                     </PrimaryButton>
