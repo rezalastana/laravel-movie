@@ -21,16 +21,23 @@ Route::redirect('/', '/prototype/login');
 
 // protory slicing /login
 Route::prefix('prototype')->name('prototype.')->group(function () {
+    // login
     Route::get('/login', function () {
         // menuju file pada Folder resources/js/Pages/Prototype/Login.jsx
         return Inertia::render('Prototype/Login');
     })->name('login');
+    // regiter
     Route::get('/register', function () {
         return Inertia::render('Prototype/Register');
     })->name('register');
+    // dashboard
     Route::get('dashboard', function () {
         return Inertia::render('Prototype/Dashboard');
     })->name('dashboard');
+    // subscription
+    Route::get('subscriptionPlan', function () {
+        return Inertia::render('Prototype/SubscriptionPlan');
+    })->name('subscriptionPlan');
 });
 
 
