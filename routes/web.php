@@ -12,10 +12,11 @@ use Inertia\Inertia;
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+    | contains the "web" middleware group. Now create something great!
 |
 */
 
+<<<<<<< HEAD
 // test middleware spatie for role admin and user
 Route::get('/admin', function () {
     return 'Hi admin';
@@ -32,7 +33,36 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+=======
+// redirect login from /
+Route::redirect('/', '/prototype/login');
+
+// protory slicing /login
+Route::prefix('prototype')->name('prototype.')->group(function () {
+    // login
+    Route::get('/login', function () {
+        // menuju file pada Folder resources/js/Pages/Prototype/Login.jsx
+        return Inertia::render('Prototype/Login');
+    })->name('login');
+    // regiter
+    Route::get('/register', function () {
+        return Inertia::render('Prototype/Register');
+    })->name('register');
+    // dashboard
+    Route::get('/dashboard', function () {
+        return Inertia::render('Prototype/Dashboard');
+    })->name('dashboard');
+    // subscription
+    Route::get('/subscriptionPlan', function () {
+        return Inertia::render('Prototype/SubscriptionPlan');
+    })->name('subscriptionPlan');
+    // show details movie
+    Route::get('/movie/{slug}', function () {
+        return Inertia::render('Prototype/Movie/Show');
+    })->name('movie.show');
+>>>>>>> feature/slicing
 });
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

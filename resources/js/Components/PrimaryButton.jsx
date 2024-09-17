@@ -1,12 +1,35 @@
-export default function PrimaryButton({ className = '', disabled, children, ...props }) {
+import PropTypes from "prop-types";
+
+PrimaryButton.propTypes = {
+    className: PropTypes.string,
+    disabled: PropTypes.bool,
+    children: PropTypes.node,
+    variant: PropTypes.oneOf([
+        "primary",
+        "warning",
+        "danger",
+        "light-outline",
+        "white-outline",
+    ]),
+    processing: PropTypes.bool,
+};
+
+export default function PrimaryButton({
+    className = "",
+    disabled,
+    children,
+    // default value variant is primary
+    variant = "primary",
+    processing,
+    //Properti lain yang tidak disebutkan secara eksplisit (seperti onClick, type, dll.) akan disimpan dalam objek props karena penggunaan {...props}.
+    ...props
+}) {
     return (
         <button
             {...props}
-            className={
-                `inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ${
-                    disabled && 'opacity-25'
-                } ` + className
-            }
+            className={`rounded-2xl py-[13px] text-center w-full ${
+                processing && "opacity-30"
+            } btn-${variant} ${className}`}
             disabled={disabled}
         >
             {children}
