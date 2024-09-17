@@ -16,24 +16,6 @@ use Inertia\Inertia;
 |
 */
 
-<<<<<<< HEAD
-// test middleware spatie for role admin and user
-Route::get('/admin', function () {
-    return 'Hi admin';
-})->middleware('role:admin');
-
-Route::get('/user', function () {
-    return 'Hi user';
-})->middleware('role:user');
-
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-=======
 // redirect login from /
 Route::redirect('/', '/prototype/login');
 
