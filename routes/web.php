@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\MovieController;
+use App\Http\Controllers\User\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,14 +26,11 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     // detail movie from slug
     Route::get('/movie/{movie:slug}', [MovieController::class, 'show'])->name('movie.show');
+    // payment view
+    Route::get('/subscription-plan', [SubscriptionPlanController::class, 'index'])->name('subcriptionPlan.index');
+    //payment process send data with id subscription plan
+    Route::post('/subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscriptionPlan.userSubscribe');
 });
-
-
-// middleware auth role:user
-// Route::prefix('dashboard')->name('user.dashboard.')->group(function () {
-//     // dashboard controller
-//     Route::get('/', [DashboardController::class, 'index'])->name('index');
-// })->middleware(['auth', 'role:user']);
 
 
 // protory slicing /login

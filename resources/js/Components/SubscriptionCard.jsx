@@ -74,7 +74,7 @@ const SubscriptionCard = ({
                     <div onClick={onSelectSubscription}>
                         <PrimaryButton type="button">
                             <span className="text-base font-semibold">
-                                Subscribe Now
+                                Subscribe {name}
                             </span>
                         </PrimaryButton>
                     </div>
@@ -108,7 +108,7 @@ const SubscriptionCard = ({
                     {/* Bottom: CTA Button */}
                     <div onClick={onSelectSubscription}>
                         <PrimaryButton type="button" variant="white-outline">
-                            <span className="text-base">Start {name}</span>
+                            <span className="text-base">Subscribe {name}</span>
                         </PrimaryButton>
                     </div>
                 </div>
