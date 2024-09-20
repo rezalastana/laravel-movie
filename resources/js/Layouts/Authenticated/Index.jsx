@@ -2,12 +2,14 @@
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 
+// auth adalah global variable, bisa di cek di middleware laravel HandleInertiaRequests auth memiliki user, activePlan, dan menyesuaikan kebutuhan
 export default function Authenticated({ auth, children }) {
     return (
         <div>
             <div className="mx-auto max-w-screen hidden lg:block">
                 {/* START sidebar */}
-                <Sidebar />
+                {/* bawa auth ke sidebar untuk mendapatkan data user active subscription */}
+                <Sidebar auth={auth} />
                 {/* END sidebar */}
 
                 {/* START content */}
