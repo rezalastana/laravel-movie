@@ -24,12 +24,12 @@ Route::redirect('/', '/login');
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function () {
     // dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    // detail movie from slug
-    Route::get('/movie/{movie:slug}', [MovieController::class, 'show'])->name('movie.show');
+    // detail movie from slug, berikan middleware checkUserSubscription agar user hanya bisa melihat movie yang sudah di membeli plan
+    Route::get('/movie/{movie:slug}', [MovieController::class, 'show'])->name('movie.show')->middleware('checkUserSubscription:true');
     // payment view
-    Route::get('/subscription-plan', [SubscriptionPlanController::class, 'index'])->name('subcriptionPlan.index');
+    Route::get('/subscription-plan', [SubscriptionPlanController::class, 'index'])->name('subcriptionPlan.index')->middleware('checkUserSubscription:false');
     //payment process send data with id subscription plan
-    Route::post('/subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscriptionPlan.userSubscribe');
+    Route::post('/subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscriptionPlan.userSubscribe')->middleware('checkUserSubscription:false');
 });
 
 
