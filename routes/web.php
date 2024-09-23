@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\MovieController;
+use App\Http\Controllers\User\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,7 +19,19 @@ use Inertia\Inertia;
 */
 
 // redirect login from /
-Route::redirect('/', '/prototype/login');
+Route::redirect('/', '/login');
+
+Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function () {
+    // dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    // detail movie from slug, berikan middleware checkUserSubscription agar user hanya bisa melihat movie yang sudah di membeli plan
+    Route::get('/movie/{movie:slug}', [MovieController::class, 'show'])->name('movie.show')->middleware('checkUserSubscription:true');
+    // payment view
+    Route::get('/subscription-plan', [SubscriptionPlanController::class, 'index'])->name('subcriptionPlan.index')->middleware('checkUserSubscription:false');
+    //payment process send data with id subscription plan
+    Route::post('/subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscriptionPlan.userSubscribe')->middleware('checkUserSubscription:false');
+});
+
 
 // protory slicing /login
 Route::prefix('prototype')->name('prototype.')->group(function () {
@@ -30,10 +44,6 @@ Route::prefix('prototype')->name('prototype.')->group(function () {
     Route::get('/register', function () {
         return Inertia::render('Prototype/Register');
     })->name('register');
-    // dashboard
-    Route::get('/dashboard', function () {
-        return Inertia::render('Prototype/Dashboard');
-    })->name('dashboard');
     // subscription
     Route::get('/subscriptionPlan', function () {
         return Inertia::render('Prototype/SubscriptionPlan');
@@ -42,13 +52,8 @@ Route::prefix('prototype')->name('prototype.')->group(function () {
     Route::get('/movie/{slug}', function () {
         return Inertia::render('Prototype/Movie/Show');
     })->name('movie.show');
->>>>>>> feature/slicing
 });
 
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
