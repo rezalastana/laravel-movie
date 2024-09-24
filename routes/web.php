@@ -6,6 +6,7 @@ use App\Http\Controllers\User\MovieController;
 use App\Http\Controllers\User\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ use Inertia\Inertia;
 // redirect login from /
 Route::redirect('/', '/login');
 
+// USER
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function () {
     // dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -30,6 +32,12 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
     Route::get('/subscription-plan', [SubscriptionPlanController::class, 'index'])->name('subcriptionPlan.index')->middleware('checkUserSubscription:false');
     //payment process send data with id subscription plan
     Route::post('/subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscriptionPlan.userSubscribe')->middleware('checkUserSubscription:false');
+});
+
+// ADMIN
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.dashboard.')->group(function () {
+    // all resource create, update, delete, index, etc
+    Route::resource('movie', AdminMovieController::class);
 });
 
 
