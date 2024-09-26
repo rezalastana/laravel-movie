@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Movie\Store;
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class MovieController extends Controller
 {
@@ -21,15 +24,32 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Admin/Movie/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    // arahkan ke function store yang sesuai dibuat di Store Admin/Movie/Store
+    public function store(Store $store)
     {
-        //
+        // validate the request with store 
+        $data = $store->validated();
+        // simpan image thumbnail, ini akan disimpan di storage/app/public/movies
+        $data['thumbnail'] = Storage::disk('public')->put('movies', $store->file('thumbnail'));
+        // buat data slug dari name
+        $data['slug'] = Str::slug($data['name']); // name: The Shawshank Redemption, slug: the-shawshank-redemption
+
+        // save data
+        Movie::create($data);
+
+        // with bisa digunakan untuk menampilkan pesan kembali ke user (flash message)
+        return redirect()->route('admin.dashboard.movie.index')->with(
+            [
+                'type' => 'success',
+                'message' => 'Movie created successfully.'
+            ]
+        );
     }
 
     /**
