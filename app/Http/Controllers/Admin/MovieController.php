@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Movie\Store;
+use App\Http\Requests\Admin\Movie\Update;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,16 @@ class MovieController extends Controller
      */
     public function index()
     {
-        return inertia('Admin/Movie/Index');
+        // take all data movie
+        $movies = Movie::all();
+        // dd($movies);
+
+        return inertia(
+            'Admin/Movie/Index',
+            [
+                'movies' => $movies
+            ]
+        );
     }
 
     /**
@@ -65,15 +75,38 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        //
+
+        // melempar data movie sesuai dengan id yang dibawa
+        return inertia('Admin/Movie/Edit', [
+            'movie' => $movie
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Update $update, Movie $movie)
     {
-        //
+        $data = $update->validated();
+        // jika update memiliki thumbail baru
+        if ($update->file('thumbnail')) {
+            // simpan gambar thumbail baru
+            $data['thumbail'] = Storage::disk('public')->put('movies', $update->file('thumbnail'));
+            // hapus image thumbnail yang lama
+            Storage::disk('public')->delete($movie->thumbnail);
+        } else {
+            // jika tidak ada gambar yang baru, gunakan gambar yang lama
+            $data['thumbnail'] = $movie->thumbnail;
+        }
+
+        // update all data
+        $movie->update($data);
+        return redirect()->route('admin.dashboard.movie.index')->with(
+            [
+                'type' => 'success',
+                'message' => 'Movie update successfully.'
+            ]
+        );
     }
 
     /**
