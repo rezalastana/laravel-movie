@@ -165,7 +165,7 @@ export default function Register() {
                                     processing={processing}
                                     // variant="light-alerange"
                                 >
-                                    Sign Up
+                                    Register
                                 </PrimaryButton>
 
                                 <Link href={route("login")}>

@@ -8,6 +8,7 @@ PrimaryButton.propTypes = {
         "primary",
         "warning",
         "danger",
+        "green",
         "light-outline",
         "white-outline",
     ]),

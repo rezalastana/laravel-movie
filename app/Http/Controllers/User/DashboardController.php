@@ -13,8 +13,10 @@ class DashboardController extends Controller
         //whereisFeatured didapatkan dari database movie -> kolom is_featured
         $featuredMovies = Movie::whereIsFeatured(true)->get();
 
-        //browse untuk movie biasa
-        $movies = Movie::get();
+        // get all browse untuk seluruh movie
+        $movies = Movie::all();
+
+        // dd($movies);
 
 
         // lihat data, berupa json
