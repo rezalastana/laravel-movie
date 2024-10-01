@@ -6,6 +6,7 @@ use App\Http\Controllers\User\MovieController;
 use App\Http\Controllers\User\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ use Inertia\Inertia;
 // redirect login from /
 Route::redirect('/', '/login');
 
+// USER
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function () {
     // dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -30,6 +32,14 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
     Route::get('/subscription-plan', [SubscriptionPlanController::class, 'index'])->name('subcriptionPlan.index')->middleware('checkUserSubscription:false');
     //payment process send data with id subscription plan
     Route::post('/subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscriptionPlan.userSubscribe')->middleware('checkUserSubscription:false');
+});
+
+// ADMIN
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.dashboard.')->group(function () {
+    // all resource create, update, delete, index, etc
+    Route::resource('movie', AdminMovieController::class);
+    // restore route
+    Route::put('movie/{movie}/restore', [AdminMovieController::class, 'restore'])->name('movie.restore');
 });
 
 
@@ -55,10 +65,10 @@ Route::prefix('prototype')->name('prototype.')->group(function () {
 });
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__ . '/auth.php';

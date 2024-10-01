@@ -30,43 +30,30 @@ export default function Dashboard({ auth, featuredMovies, movies }) {
                     <title>Dashboard</title>
                 </Head>
                 {/* children dari authenticated akan di isii disini */}
+                {/* Featured */}
                 <div>
                     <div className="font-semibold text-[22px] text-black mb-4">
                         Featured Movies
                     </div>
-                    <Flickity
-                        // className="gap-[30px] carousel"
-                        className={"carousel gap-[30px]"} // default ''
-                        elementType={"div"} // default 'div'
-                        options={flickityOptions} // takes flickity options {}
-                        disableImagesLoaded={false} // default false
-                        reloadOnUpdate // default false
-                        static // default false
-                    >
-                        {/* MOVIE */}
-                        {/* karena featuredMovies sudah bernilai array, maka tidak perlu menggunakan [] */}
+                    <Flickity className="gap-[30px]" options={flickityOptions}>
                         {featuredMovies.map((featuredMovie) => (
                             <FeaturedMovie
                                 key={featuredMovie.id}
-                                name={featuredMovie.name}
                                 slug={featuredMovie.slug}
+                                name={featuredMovie.name}
                                 category={featuredMovie.category}
                                 thumbnail={featuredMovie.thumbnail}
-                                // thumbnail={`images/featured-${
-                                //     ((featuredMovie - 1) % 3) + 1
-                                // }.png`}
                                 rating={featuredMovie.rating}
                             />
                         ))}
                     </Flickity>
                 </div>
-                {/* Browse */}
-                <div className="mt-[50px]">
+                {/* Browse Movies*/}
+                <div className="mt-12">
                     <div className="font-semibold text-[22px] text-black mb-4">
                         Browse
                     </div>
-                    <Flickity options={flickityOptions}>
-                        {/* Movies  */}
+                    <Flickity className="gap-[30px]" options={flickityOptions}>
                         {movies.map((movie) => (
                             <Moviecard
                                 key={movie.id}
