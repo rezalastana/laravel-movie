@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 use Carbon\Carbon;
 
+
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -63,6 +64,11 @@ class HandleInertiaRequests extends Middleware
                 // tambahkan activePlan
                 'activePlan' => $this->activePlan(),
             ],
+            // menampilkan flash message dari controller
+            'flashMessage' => [
+                'type' => $request->session()->get('type'),
+                'message' => $request->session()->get('message'),
+            ]
         ];
     }
 }

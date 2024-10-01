@@ -17,3 +17,7 @@
 .btn-white-outline {
     @apply text-black border border-[#F1F1F1] !important;
 }
+
+.btn-green {
+    @apply bg-green-600 text-white  !important;
+}
