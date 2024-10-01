@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         //call the Seeder table
         $this->call(RoleTableSeeder::class);
         $this->call(UserTableSeeder::class);
+        $this->call(SubscriptionTableSeeder::class);
+        $this->call(MovieTableSeeder::class);
     }
 }
