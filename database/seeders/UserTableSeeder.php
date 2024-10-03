@@ -19,7 +19,13 @@ class UserTableSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
         ]);
-        // assign role admin, from spatie role
+        $user = User::create([
+            'name' => 'User',
+            'email' => 'user@user.com',
+            'password' => bcrypt('password'),
+        ]);
+        // assign role 
         $admin->assignRole('admin');
+        $user->assignRole('user');
     }
 }

@@ -4,7 +4,7 @@ import SubscriptionCard from "@/Components/SubscriptionCard";
 // router silahkan di cek pada https://inertiajs.com/manual-visits
 import { router } from "@inertiajs/react";
 
-export default function SubscriptionPlan({ auth, subscriptionPlans }) {
+export default function SubscriptionPlan({ auth, subscriptionPlans, env }) {
     // params id akan digunakan untuk mengirimkan id ke backend
     const selectSubcription = (id) => {
         console.log(id);
@@ -15,13 +15,43 @@ export default function SubscriptionPlan({ auth, subscriptionPlans }) {
             route("subscriptionPlan.userSubscribe", {
                 subscriptionPlan: id,
             }),
+            {},
+            {
+                only: ["userSubscription"],
+                onSuccess: ({ props }) => {
+                    onSnapMidtrans(props.userSubscription);
+                },
+            },
         );
+    };
+
+    const onSnapMidtrans = (userSubscription) => {
+        snap.pay(userSubscription.snap_token, {
+            // Optional
+            onSuccess: function (result) {
+                // arahkan ke Index Dashboard jika payment success
+                router.visit(route("dashboard"));
+            },
+            // Optional
+            onPending: function (result) {
+                console.log(result);
+            },
+            // Optional
+            onError: function (result) {
+                console.log(result);
+            },
+        });
     };
 
     return (
         <Authenticated auth={auth}>
             <Head>
                 <title>Payments</title>
+                {/* js from snap midtrans */}
+                <script
+                    src="https://app.sandbox.midtrans.com/snap/snap.js"
+                    data-client-key={env.MIDTRANS_CLIENTKEY}
+                ></script>
             </Head>
             <div className="py-20 flex flex-col items-center">
                 <div className="text-black font-semibold text-[26px] mb-3">

@@ -59,6 +59,7 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            // ini akan menjadi global variable yang dapat digunakan di semua file
             'auth' => [
                 'user' => $request->user(),
                 // tambahkan activePlan
@@ -68,6 +69,10 @@ class HandleInertiaRequests extends Middleware
             'flashMessage' => [
                 'type' => $request->session()->get('type'),
                 'message' => $request->session()->get('message'),
+            ],
+            'env' => [
+                'MIDTRANS_SERVERKEY' => env('MIDTRANS_SERVERKEY'),
+                'MIDTRANS_CLIENTKEY' => env('MIDTRANS_CLIENTKEY'),
             ]
         ];
     }

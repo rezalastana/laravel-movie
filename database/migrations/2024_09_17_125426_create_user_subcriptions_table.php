@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_subcriptions', function (Blueprint $table) {
+        Schema::create('user_subscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('subscription_plan_id')->constrained();
@@ -20,7 +20,7 @@ return new class extends Migration
             // berikan default pending untuk status pembayaran
             $table->string('payment_status', 10)->default('pending');
             // snapToken dari js midtrans
-            $table->string('snapToken')->nullable();
+            $table->string('snap_token')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
