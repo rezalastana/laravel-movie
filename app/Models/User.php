@@ -51,7 +51,7 @@ class User extends Authenticatable
     //relasi antara user dengan userSubscription, hasOne karena ambil relasi terakhir yang paid dan 1 data saja
     public function lastActiveUserSubscription(): HasOne
     {
-        return $this->hasOne(UserSubcription::class)->wherePaymentStatus('paid')->latest();
+        return $this->hasOne(UserSubscription::class)->wherePaymentStatus('paid')->latest();
     }
 
     // buat method chek atived user subscription

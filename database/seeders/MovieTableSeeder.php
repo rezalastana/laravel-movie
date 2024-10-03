@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Movie;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use GuzzleHttp\Client;
 
 class MovieTableSeeder extends Seeder
 {
@@ -13,22 +14,24 @@ class MovieTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $client = new Client();
+        $accessKey = env('UNSPLASH_ACCESS_KEY');
+
+        // Mengambil gambar dari Unsplash
+        $response = $client->get("https://api.unsplash.com/photos/random?client_id={$accessKey}");
+        $data = json_decode($response->getBody(), true);
+
+        // Ambil URL thumbnail dari Unsplash
+        $thumbnailUrl = $data['urls']['small']; // Anda bisa memilih 'small', 'medium', atau 'large' sesuai kebutuhan
+
+
         $movie = [
-            [
-                'name' => 'The Shawshank Redemption',
-                'slug' => 'the-shawshank-redemption',
-                'category' => 'Drama',
-                'video_url' => 'https://www.youtube.com/watch?v=6hB3S9bIaco',
-                'thumbnail' => 'https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg',
-                'rating' => 4.3,
-                'is_featured' => true,
-            ],
             [
                 'name' => 'The Godfather',
                 'slug' => 'the-godfather',
                 'category' => 'Crime',
                 'video_url' => 'https://www.youtube.com/watch?v=sY1S34973zA',
-                'thumbnail' => 'https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg',
+                'thumbnail' => $thumbnailUrl,
                 'rating' => 4.2,
                 'is_featured' => true,
             ],
@@ -37,7 +40,7 @@ class MovieTableSeeder extends Seeder
                 'slug' => 'the-dark-knight',
                 'category' => 'Action',
                 'video_url' => 'https://www.youtube.com/watch?v=EXeTwQWrcwY',
-                'thumbnail' => 'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
+                'thumbnail' => $thumbnailUrl,
                 'rating' => 4.0,
                 'is_featured' => false,
             ],
@@ -46,7 +49,7 @@ class MovieTableSeeder extends Seeder
                 'slug' => '12-angry',
                 'category' => 'Drama',
                 'video_url' => 'https://www.youtube.com/watch?v=A7CBKT0PWFA',
-                'thumbnail' => 'https://image.tmdb.org/t/p/w500/3WZTxpgscsmoUk81TuECXdFOD0R.jpg',
+                'thumbnail' => $thumbnailUrl,
                 'rating' => 4.9,
                 'is_featured' => false,
             ]

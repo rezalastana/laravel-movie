@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserSubcription extends Model
+class UserSubscription extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -17,7 +17,7 @@ class UserSubcription extends Model
         'price',
         'expired_date',
         'payment_status',
-        'snapToken',
+        'snap_token',
     ];
 
     // belongsTo ke User

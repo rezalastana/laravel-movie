@@ -7,6 +7,7 @@ use App\Http\Controllers\User\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Admin\MovieController as AdminMovieController;
+use App\Models\UserSubscription;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,10 @@ Route::prefix('prototype')->name('prototype.')->group(function () {
         return Inertia::render('Prototype/Movie/Show');
     })->name('movie.show');
 });
+
+// MIDTRANS ROUTE
+// namun harus di abaikan csrfnya -> app/Http/Middleware/VerifyCsrfToken.php
+Route::post('/midtrans/notification', [SubscriptionPlanController::class, 'midtransCallback']);
 
 
 // Route::middleware('auth')->group(function () {
